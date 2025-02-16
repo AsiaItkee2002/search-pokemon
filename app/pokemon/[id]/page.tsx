@@ -2,7 +2,7 @@
 
 import { gql, useQuery } from "@apollo/client";
 import { useState } from "react"; 
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Loading from "@/components/Loading";
 import Error from "@/components/Error";
 import PokemonCard from "@/components/PokemonCard";
@@ -45,9 +45,16 @@ export default function PokemonPage() {
     skip: !query, 
   });
 
+  const router = useRouter();
   const handleSearch = (query: string) => {
-    setQuery(query); 
+    if (query.trim()) {
+      router.push(`/pokemon/${query.trim()}`);
+    }
   };
+
+  // const handleSearch = (query: string) => {
+  //   setQuery(query); 
+  // };
 
   if (loading) return <Loading />;
   if (error) return <Error message="Error fetching Pokémon data" />;
