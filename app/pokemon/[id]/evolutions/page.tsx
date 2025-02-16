@@ -23,10 +23,13 @@ interface Evolution {
 export default async function PokemonEvolutionsPage({ params }: { params: { id: string } }) {
   const client = getClient();
 
+  // ใช้ await เพื่อรอให้ params ได้ข้อมูลก่อนใช้งาน
+  const { id } = await params;  // ใช้ await ที่ params
+  
   try {
     const { data } = await client.query({
       query: GET_POKEMON_EVOLUTIONS,
-      variables: { name: params.id },
+      variables: { name: id },
     });
 
     const evolutions: Evolution[] = data.pokemon?.evolutions || [];
@@ -37,7 +40,7 @@ export default async function PokemonEvolutionsPage({ params }: { params: { id: 
           <h1 className="text-3xl font-extrabold text-blue-700 mb-6">
             Evolutions of {data.pokemon.name}
           </h1>
-    
+
           {evolutions.length > 0 ? (
             <div
               className={`${
@@ -57,12 +60,12 @@ export default async function PokemonEvolutionsPage({ params }: { params: { id: 
                     alt={evolution.name}
                     className="w-32 h-32 object-contain mb-3"
                   />
-    
+
                   {/* Pokémon Name */}
                   <h3 className="text-lg font-semibold text-gray-800">
                     {evolution.name}
                   </h3>
-    
+
                   {/* Read More Link */}
                   <Link
                     href={`/pokemon/${evolution.name}`}
@@ -76,16 +79,16 @@ export default async function PokemonEvolutionsPage({ params }: { params: { id: 
           ) : (
             <p className="text-gray-500">No evolutions available</p>
           )}
-    
+
           {/* Back Button */}
           <div className="mt-8 text-center">
-            <Link href={`/pokemon/${params.id}`}>
+            <Link href={`/pokemon/${id}`}>
               <button
                 type="button"
                 className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 
                 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
               >
-                ← Back to {params.id}
+                ← Back to {id}
               </button>
             </Link>
           </div>
