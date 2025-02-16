@@ -39,7 +39,7 @@ export default function PokemonPage() {
   // แปลง id เป็น string 
   const searchTerm = Array.isArray(id) ? id[0] : id || ""; // หากเป็น array ให้เลือกค่าครั้งแรก หรือถ้าไม่มีค่าก็ให้เป็น ""
 
-  const [query, setQuery] = useState<string>(searchTerm); 
+  const [query] = useState<string>(searchTerm); 
   const { data, loading, error } = useQuery(GET_POKEMON_INFO, {
     variables: { name: query },
     skip: !query, 
