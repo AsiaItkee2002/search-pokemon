@@ -1,15 +1,18 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  output: "standalone", 
+  trailingSlash: true,  
   async redirects() {
     return [
       {
         source: '/',
-        destination: '/pokemon',  // เปลี่ยนเส้นทางไปยัง /pokemon
-        permanent: true,          // ใช้ permanent redirect
+        destination: '/pokemon', 
+        permanent: true,
       },
     ];
   },
 };
 
 export default nextConfig;
+
